@@ -1,0 +1,88 @@
+{% extends 'register/base.html' %}
+{% load static %}
+{% block title %}
+<header data-bs-theme="dark">
+  <div class="collapse text-bg-dark" id="navbarHeader">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 col-md-7 py-4">
+          <h4>ЧДГП №1</h4>
+            <p class="text-body-secondary">Череповецкая детская городская поликлинника N1</p>
+        </div>
+        <div class="col-sm-4 offset-md-1 py-4">
+          <h4>Личные данные</h4>
+         {% if request.user.is_authenticated %}
+        <div class="dropdown">
+            <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                <img  src="{{ user_profile.avatar.url }}" width="32" height="32" class="rounded-circle me-2">
+                <strong>{{user.username}}</strong>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+
+                 </li>
+                <li><a class="dropdown-item" href="{% url 'register:logout' %}">Выход</a></li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="#">Личный кабинет</a></li>
+                {% else %}
+                <div class="dropdown">
+                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                       id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="https://i.mycdn.me/getVideoPreview?id=993716275781&idx=7&type=39&tkn=FNU2ML1hZySgO7W8OagGpN24hqI&fn=vid_l" alt="" width="32" height="32" class="rounded-circle me-2">
+                        <strong>черт</strong>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                        <li><a class="dropdown-item" href="{% url 'register:reg' %}">Регистрация</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="{% url 'register:login' %}">Войти</a></li>
+                        {% endif %}
+
+
+                    </ul>
+                  </div>
+
+
+        </div>
+      </div>
+          </div>
+    </div>
+
+  </div>
+  <div class="navbar navbar-dark bg-dark shadow-sm">
+    <div class="container">
+      <a href="{% url 'register:home' %}" class="navbar-brand d-flex align-items-center">
+        <img  src="{% static 'register/del.png' %}" width="20" height="20" class="rounded-circle me-2">
+
+        <strong>Удаление пациента</strong>
+
+
+
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+    </div>
+  </div>
+</header>
+    {% endblock %}
+
+{% block message %}
+<div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+  <div style="width: 300px; border: 1px solid #ccc; padding: 20px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+    <h2>Удаление пациента</h2>
+    <p>Вы уверены, что хотите удалить пациента "{{ object }}"?</p>
+
+    <form method="post">
+      {% csrf_token %}
+      <div style="text-align: center;">
+        <input type="submit" value="Удалить" style="margin-right: 10px;"/>
+        <a href="{% url 'register:home' %}">Отменить</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
